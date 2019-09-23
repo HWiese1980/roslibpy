@@ -24,16 +24,20 @@
 # THE SOFTWARE.
 
 """
-This module contains the ApproximateTimeSynchronizer; a message filter that is supposed to synchronize two or more topics.
+This module contains the ApproximateTimeSynchronizer; a message filter that
+is supposed to synchronize two or more topics.
 
-It should be considered unstable. The algorithm itself is very basic as it just stores the latest messages for all registered topics and
-invokes a callback function if all latest messages have a header/stamp within a given interval from each other. All other messages will
-be dropped.
+It should be considered unstable. The algorithm itself is very basic as it
+just stores the latest messages for all registered topics and invokes a
+callback function if all latest messages have a header/stamp within a given
+interval from each other. All other messages will be dropped.
 
-There is an optional unsynced callback that gets invoked every time that a message arrives on a given topic. These messages won't get
-dropped; at least not by the synchronizer.
+There is an optional unsynced callback that gets invoked every time that a
+message arrives on a given topic. These messages won't get dropped; at least
+not by the synchronizer.
 
-This file could use some clean up and streamlining, and maybe a more sophisticated algorithm.
+This file could use some clean up and streamlining, and maybe a more
+sophisticated algorithm.
 
 Author: Hendrik Wiese (hendrik.wiese@dfki.de)
 Date of issue: 2019-09-23
@@ -51,9 +55,12 @@ class ApproximateTimeSynchronizer:
         Create an instance of the ApproximateTimeSynchronizer.
 
         Args:
-            callback: callable; The callable is invoked if all latest messages have arrived within a given time frame according to their header stamp.
-            The argument names must match the names given when registering a topic. (see `register`)
-            slop: the maximum delta between the oldest and the youngest of the most recent messages on all registered topics.
+            callback: callable; The callable is invoked if all latest messages
+                have arrived within a given time frame according to their header
+                stamp. The argument names must match the names given when
+                registering a topic. (see `register`)
+            slop: the maximum delta between the oldest and the youngest of the
+                most recent messages on all registered topics.
         """
         self.callback = callback
         self.slop = slop
@@ -79,12 +86,15 @@ class ApproximateTimeSynchronizer:
 
     def register(self, topic, name, unsynced_cb=None):
         """
-        Register a topic for synchronization. The optional unsynced callback will get called every time that a message arrives
-        on this topic, disregard if it's in sync with other messages of this synchronizer.
+        Register a topic for synchronization. The optional unsynced callback
+        will get called every time that a message arrives on this topic,
+        disregard if it's in sync with other messages of this synchronizer.
 
         Args:
             topic: roslibpy.Topic; The roslibpy.Topic object to register
-            name: str; The name of the parameter of the synchronizer callback that is filled with messages from this topic
-            unsynced_cb: callable (optional); A callback function for the unsynchronized message on this topic
+            name: str; The name of the parameter of the synchronizer callback
+                that is filled with messages from this topic
+            unsynced_cb: callable (optional); A callback function for the
+                unsynchronized message on this topic
         """
         topic.subscribe(self._create_cb(name, unsynced_cb))
