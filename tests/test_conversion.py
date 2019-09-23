@@ -1,4 +1,5 @@
-from roslibpy.conversions import from_epoch, to_epoch
+from roslibpy.conversions import from_epoch
+from roslibpy.conversions import to_epoch
 
 
 def test_conversions():
