@@ -7,6 +7,20 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog <http://keepachangelog.com/en/1.0.0/>`_
 and this project adheres to `Semantic Versioning <http://semver.org/spec/v2.0.0.html>`_.
 
+0.7.0
+----------
+
+**Changed**
+
+* The non-blocking event loop runner ``run()`` now defaults to 10 seconds timeout before raising an exception.
+
+**Added**
+
+* Added blocking behavior to ROS API methods, e.g. ``ros.get_topics``.
+* Added command-line mode to ROS API, e.g. ``roslibpy topic list``.
+* Added blocking behavior to the ``Param`` class.
+* Added parameter manipulation methods to ``Ros`` class: ``get_param``, ``set_param``, ``delete_param``.
+
 0.6.0
 ----------
 
