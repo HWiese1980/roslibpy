@@ -43,6 +43,7 @@ Author: Hendrik Wiese (hendrik.wiese@dfki.de)
 Date of issue: 2019-09-23
 
 """
+import json
 
 from roslibpy.conversions import to_epoch
 
@@ -68,6 +69,11 @@ class ApproximateTimeSynchronizer:
 
     def _create_cb(self, name, unsynced_cb):
         def _cb(msg):
+            try:
+                # Try to parse json message
+                msg = json.loads(msg["data"])
+            except:
+                pass
             self._last_messages[name] = msg
             self._on_new_message()
             if callable(unsynced_cb):
@@ -82,7 +88,7 @@ class ApproximateTimeSynchronizer:
             stamps.append(stamp)
         delta = (max(stamps) - min(stamps))
         if len(stamps) > 1 and delta < self.slop:
-            self.callback(**self._last_messages, delta=delta)
+            self.callback(delta=delta, **self._last_messages)
 
     def register(self, topic, name, unsynced_cb=None):
         """
