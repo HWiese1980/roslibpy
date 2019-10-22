@@ -74,6 +74,6 @@ def from_epoch(stamp):
     secs = int(stamp)
     nsecs = (stamp - secs) * 1e9
     return {
-        "secs": secs,
-        "nsecs": nsecs
+        "secs": int(secs),
+        "nsecs": int(nsecs)
     }
